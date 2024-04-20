@@ -31,3 +31,5 @@ b
 2hello-service-2/src/main/resources/application.yml,1/d/1ddf5c258a27c7cacabbf17ffa2040e7ed97ce3d
 i
 9spring-cloud-eureka-feign-client-integration-test/pom.xml,d/3/d3483294d782a8f66ab8165df08cf10be2bf0bb8
+¿
+Žspring-cloud-eureka-feign-client-integration-test/src/main/java/id/my/hendisantika/springcloudeurekafeignclientintegrationtest/model/Book.java,6/9/696273aed78277d7c6273a5e1432dd54c85c779c
