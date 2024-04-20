@@ -17,9 +17,12 @@ import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClients;
 import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.cloud.loadbalancer.support.ServiceInstanceListSuppliers;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -101,4 +104,17 @@ class LoadBalancerIntegrationTest {
     protected static class Config {
 
     }
+
+    protected static class MyBooksServiceConfig {
+
+        @Bean
+        public RoundRobinLoadBalancer roundRobinContextLoadBalancer(LoadBalancerClientFactory clientFactory,
+                                                                    Environment env) {
+            String serviceId = LoadBalancerClientFactory.getName(env);
+            return new RoundRobinLoadBalancer(
+                    clientFactory.getLazyProvider(serviceId, ServiceInstanceListSupplier.class), serviceId, -1);
+        }
+
+    }
+
 }
