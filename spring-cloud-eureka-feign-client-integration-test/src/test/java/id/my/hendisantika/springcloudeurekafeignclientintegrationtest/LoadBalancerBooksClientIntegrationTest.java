@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.client.DefaultServiceInstance;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.cloud.loadbalancer.support.ServiceInstanceListSuppliers;
@@ -20,11 +23,14 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.moreThan;
 import static id.my.hendisantika.springcloudeurekafeignclientintegrationtest.BookMocks.setupMockBooksResponse;
 import static java.util.Arrays.asList;
+import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
@@ -91,4 +97,33 @@ class LoadBalancerBooksClientIntegrationTest {
                         new Book("Dune", "Frank Herbert"),
                         new Book("Foundation", "Isaac Asimov"))));
     }
+
+    @Test
+    void loadbalancerWorks() throws IOException {
+
+        setupMockBooksResponse(mockBooksService);
+        setupMockBooksResponse(secondMockBooksService);
+
+        ReactiveLoadBalancer<ServiceInstance> reactiveLoadBalancer = this.clientFactory.getInstance("books-service",
+                ReactiveLoadBalancer.class, ServiceInstance.class);
+
+        then(reactiveLoadBalancer).isInstanceOf(RoundRobinLoadBalancer.class);
+        then(reactiveLoadBalancer).isInstanceOf(ReactorLoadBalancer.class);
+        ReactorLoadBalancer<ServiceInstance> loadBalancer = (ReactorLoadBalancer<ServiceInstance>) reactiveLoadBalancer;
+
+        for (int k = 0; k < 10; k++) {
+            booksClient.getBooks();
+        }
+
+        // order dependent on seedPosition -1 of RoundRobinLoadBalancer
+        List<String> hosts = Arrays.asList("localhost", "localhost");
+
+        assertLoadBalancer(loadBalancer, hosts);
+
+        mockBooksService.verify(
+                moreThan(0), getRequestedFor(WireMock.urlEqualTo("/books")));
+        secondMockBooksService.verify(
+                moreThan(0), getRequestedFor(WireMock.urlEqualTo("/books")));
+    }
+
 }
