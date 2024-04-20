@@ -2,6 +2,7 @@ package id.my.hendisantika.springcloudeurekafeignclientintegrationtest;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import id.my.hendisantika.springcloudeurekafeignclientintegrationtest.client.BooksClient;
+import id.my.hendisantika.springcloudeurekafeignclientintegrationtest.model.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +17,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.io.IOException;
 
 import static id.my.hendisantika.springcloudeurekafeignclientintegrationtest.BookMocks.setupMockBooksResponse;
+import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Created by IntelliJ IDEA.
@@ -52,7 +55,15 @@ class BooksClientIntegrationTest {
     }
 
     @Test
-    public void whenGetBooks_thenBooksShouldBeReturned() {
+    void whenGetBooks_thenBooksShouldBeReturned() {
         assertFalse(booksClient.getBooks().isEmpty());
+    }
+
+    @Test
+    void whenGetBooks_thenTheCorrectBooksShouldBeReturned() {
+        assertTrue(booksClient.getBooks()
+                .containsAll(asList(
+                        new Book("Dune", "Frank Herbert"),
+                        new Book("Harry Potter", "JK. Rowling"))));
     }
 }
