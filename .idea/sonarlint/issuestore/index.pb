@@ -25,3 +25,7 @@ Vhello-service/src/main/java/com/hendisantika/helloservice/HelloServiceApplicati
 Zhello-service-2/src/main/java/com/hendisantika/helloservice2/HelloService2Application.java,9/e/9e85064015865774034ba611a3380a9d6cc70e81
 Å
 Qhello-service/src/main/java/com/hendisantika/helloservice/GreetingController.java,5/c/5c2b580dac65fa736bc7d42337dfcdf78aedaa73
+`
+0hello-service/src/main/resources/application.yml,a/0/a0b268561abd653ab4f92784d7634c45b56b256a
+b
+2hello-service-2/src/main/resources/application.yml,1/d/1ddf5c258a27c7cacabbf17ffa2040e7ed97ce3d
