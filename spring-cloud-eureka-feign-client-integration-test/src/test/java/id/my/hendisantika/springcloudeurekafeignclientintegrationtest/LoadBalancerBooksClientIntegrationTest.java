@@ -2,15 +2,22 @@ package id.my.hendisantika.springcloudeurekafeignclientintegrationtest;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import id.my.hendisantika.springcloudeurekafeignclientintegrationtest.client.BooksClient;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
+import org.springframework.cloud.loadbalancer.support.ServiceInstanceListSuppliers;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.io.IOException;
+
+import static id.my.hendisantika.springcloudeurekafeignclientintegrationtest.BookMocks.setupMockBooksResponse;
 
 /**
  * Created by IntelliJ IDEA.
@@ -41,4 +48,15 @@ class LoadBalancerBooksClientIntegrationTest {
 
     @Autowired
     private LoadBalancerClientFactory clientFactory;
+
+    @BeforeEach
+    void setUp() throws IOException {
+        setupMockBooksResponse(mockBooksService);
+        setupMockBooksResponse(secondMockBooksService);
+
+        String serviceId = "books-service";
+        RoundRobinLoadBalancer loadBalancer = new RoundRobinLoadBalancer(ServiceInstanceListSuppliers
+                .toProvider(serviceId, instance(serviceId, "localhost", 1030, false), instance(serviceId, "localhost", 1031, true)),
+                serviceId, -1);
+    }
 }
