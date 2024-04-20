@@ -25,4 +25,8 @@ public class TestConfig {
         return new WireMockServer(options().port(1030));
     }
 
+    @Bean(name = "secondMockBooksService", initMethod = "start", destroyMethod = "stop")
+    public WireMockServer secondBooksMockService() {
+        return new WireMockServer(options().port(1031));
+    }
 }
