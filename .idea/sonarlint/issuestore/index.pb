@@ -64,3 +64,5 @@ X
 (spring-cloud-eureka-feign-client/pom.xml,c/0/c0e1db44b390e2e1fffb6b711d22e5dc32f23ee8
 ¼
 ‹spring-cloud-eureka-feign-client/src/main/java/id/my/hendisantika/springcloudeurekafeignclient/SpringCloudEurekaFeignClientApplication.java,5/9/5929e895dd1a3f06b2dd0082a31639d0eb6e6eb4
+¢
+rspring-cloud-eureka-feign-client/src/main/java/id/my/hendisantika/springcloudeurekafeignclient/GreetingClient.java,1/7/17f05b2b229e905d7427699e9ca4c40af8c8ab94
