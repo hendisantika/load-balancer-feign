@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.client.DefaultServiceInstance;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
@@ -82,5 +83,9 @@ class LoadBalancerIntegrationTest {
                 .toProvider(serviceId, instance(serviceId, "bookservice1", 1030, false), instance(serviceId, "bookservice2", 1031, false)),
                 serviceId, -1);
         assertLoadBalancer(loadBalancer, Arrays.asList("bookservice1", "bookservice2"));
+    }
+
+    private static DefaultServiceInstance instance(String serviceId, String host, int port, boolean secure) {
+        return new DefaultServiceInstance(serviceId, serviceId, host, port, secure);
     }
 }
