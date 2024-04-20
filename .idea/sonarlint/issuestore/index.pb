@@ -49,3 +49,5 @@ i
 ™spring-cloud-eureka-feign-client-integration-test/src/test/java/id/my/hendisantika/springcloudeurekafeignclientintegrationtest/EurekaContainerConfig.java,1/7/17f5992d58962cf95921e659a0d6ac76b6075e4c
 Û
 ªspring-cloud-eureka-feign-client-integration-test/src/test/java/id/my/hendisantika/springcloudeurekafeignclientintegrationtest/LoadBalancerBooksClientIntegrationTest.java,4/0/40b8279224ce962d10df2835d386be3492bf4e72
+Ð
+Ÿspring-cloud-eureka-feign-client-integration-test/src/test/java/id/my/hendisantika/springcloudeurekafeignclientintegrationtest/LoadBalancerIntegrationTest.java,c/3/c39404b18bcdb00c99c7f7fef65fe98a2135f8d2
