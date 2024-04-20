@@ -39,3 +39,5 @@ i
 ∫spring-cloud-eureka-feign-client-integration-test/src/main/java/id/my/hendisantika/springcloudeurekafeignclientintegrationtest/SpringCloudEurekaFeignClientIntegrationTestApplication.java,b/a/ba950d6e0058bda72f66202887f3d803a12fd0c7
 æ
 çspring-cloud-eureka-feign-client-integration-test/src/test/java/id/my/hendisantika/springcloudeurekafeignclientintegrationtest/BookMocks.java,0/6/06ce2646a5f55515eb9778eb8f302afb20092601
+œ
+ûspring-cloud-eureka-feign-client-integration-test/src/test/java/id/my/hendisantika/springcloudeurekafeignclientintegrationtest/BooksClientIntegrationTest.java,a/a/aa97e87c0d4d562409fb6333c6b5ca037378aa56
