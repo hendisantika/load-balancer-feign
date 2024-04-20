@@ -3,6 +3,7 @@ package id.my.hendisantika.springcloudeurekafeignclientintegrationtest;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import id.my.hendisantika.springcloudeurekafeignclientintegrationtest.client.BooksClient;
+import id.my.hendisantika.springcloudeurekafeignclientintegrationtest.model.Book;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +24,8 @@ import java.io.IOException;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.moreThan;
 import static id.my.hendisantika.springcloudeurekafeignclientintegrationtest.BookMocks.setupMockBooksResponse;
+import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Created by IntelliJ IDEA.
@@ -79,5 +82,13 @@ class LoadBalancerBooksClientIntegrationTest {
                 moreThan(0), getRequestedFor(WireMock.urlEqualTo("/books")));
         secondMockBooksService.verify(
                 moreThan(0), getRequestedFor(WireMock.urlEqualTo("/books")));
+    }
+
+    @Test
+    public void whenGetBooks_thenTheCorrectBooksShouldBeReturned() {
+        assertTrue(booksClient.getBooks()
+                .containsAll(asList(
+                        new Book("Dune", "Frank Herbert"),
+                        new Book("Foundation", "Isaac Asimov"))));
     }
 }
