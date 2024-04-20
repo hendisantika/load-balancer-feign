@@ -55,3 +55,10 @@ i
 ™spring-cloud-eureka-feign-client-integration-test/src/test/java/id/my/hendisantika/springcloudeurekafeignclientintegrationtest/MockBookServiceConfig.java,3/f/3f8a41c58522d755335f2270fe3d3aaa1a719d98
 Ø
 §spring-cloud-eureka-feign-client-integration-test/src/test/java/id/my/hendisantika/springcloudeurekafeignclientintegrationtest/ServiceDiscoveryBooksClientLiveTest.java,2/b/2bbdc45a30032494210885fd9fae179099b5c8ad
+[
++spring-cloud-eureka-feign-client/.gitignore,e/b/eb4338f800d4834ac0e9f5fe5535c37c09cc2041
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+X
+(spring-cloud-eureka-feign-client/pom.xml,c/0/c0e1db44b390e2e1fffb6b711d22e5dc32f23ee8
