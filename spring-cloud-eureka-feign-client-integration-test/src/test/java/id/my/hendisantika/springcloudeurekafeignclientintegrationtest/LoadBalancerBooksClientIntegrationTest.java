@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.client.DefaultServiceInstance;
 import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.client.loadbalancer.reactive.ReactiveLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
@@ -21,6 +22,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -126,4 +129,23 @@ class LoadBalancerBooksClientIntegrationTest {
                 moreThan(0), getRequestedFor(WireMock.urlEqualTo("/books")));
     }
 
+    private void assertLoadBalancer(ReactorLoadBalancer<ServiceInstance> loadBalancer, List<String> hosts) {
+        for (String host : hosts) {
+            Mono<Response<ServiceInstance>> source = loadBalancer.choose();
+            StepVerifier.create(source).consumeNextWith(response -> {
+                then(response).isNotNull();
+                then(response.hasServer()).isTrue();
+
+                ServiceInstance instance = response.getServer();
+                then(instance).isNotNull();
+                then(instance.getHost()).as("instance host is incorrect %s", host).isEqualTo(host);
+
+                if (host.contains("secure")) {
+                    then(instance.isSecure()).isTrue();
+                } else {
+                    then(instance.isSecure()).isFalse();
+                }
+            }).verifyComplete();
+        }
+    }
 }
