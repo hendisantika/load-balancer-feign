@@ -1,7 +1,11 @@
 package id.my.hendisantika.springcloudeurekafeignclientintegrationtest;
 
+import com.github.tomakehurst.wiremock.WireMockServer;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
+
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,4 +20,9 @@ import org.springframework.test.context.ActiveProfiles;
 @TestConfiguration
 @ActiveProfiles("test")
 public class TestConfig {
+    @Bean(initMethod = "start", destroyMethod = "stop")
+    public WireMockServer mockBooksService() {
+        return new WireMockServer(options().port(1030));
+    }
+
 }
