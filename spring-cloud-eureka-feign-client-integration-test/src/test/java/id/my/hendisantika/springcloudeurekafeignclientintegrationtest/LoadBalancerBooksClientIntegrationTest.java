@@ -7,6 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cloud.client.DefaultServiceInstance;
 import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.cloud.loadbalancer.support.ServiceInstanceListSuppliers;
@@ -59,4 +60,9 @@ class LoadBalancerBooksClientIntegrationTest {
                 .toProvider(serviceId, instance(serviceId, "localhost", 1030, false), instance(serviceId, "localhost", 1031, true)),
                 serviceId, -1);
     }
+
+    private static DefaultServiceInstance instance(String serviceId, String host, int port, boolean secure) {
+        return new DefaultServiceInstance(serviceId, serviceId, host, port, secure);
+    }
+
 }
