@@ -6,5 +6,12 @@
     <file type="web" url="file://$PROJECT_DIR$/hello-service" />
     <file type="web" url="file://$PROJECT_DIR$/hello-service-2" />
   </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/spring-cloud-eureka-feign-client-integration-test/pom.xml" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_21_PREVIEW" project-jdk-name="corretto-21" project-jdk-type="JavaSDK" />
 </project>
