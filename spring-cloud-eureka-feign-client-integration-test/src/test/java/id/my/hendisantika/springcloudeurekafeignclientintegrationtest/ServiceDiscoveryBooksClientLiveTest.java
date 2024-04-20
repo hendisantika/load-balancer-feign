@@ -3,6 +3,7 @@ package id.my.hendisantika.springcloudeurekafeignclientintegrationtest;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 import id.my.hendisantika.springcloudeurekafeignclientintegrationtest.client.BooksClient;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -11,6 +12,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,4 +39,10 @@ class ServiceDiscoveryBooksClientLiveTest {
     @Lazy
     @Autowired
     private EurekaClient eurekaClient;
+
+    @BeforeEach
+    void setUp() {
+        await().atMost(60, SECONDS).until(() -> eurekaClient.getApplications().size() > 0);
+    }
+
 }
