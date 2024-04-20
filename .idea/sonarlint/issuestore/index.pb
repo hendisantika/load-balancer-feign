@@ -29,3 +29,5 @@ Qhello-service/src/main/java/com/hendisantika/helloservice/GreetingController.ja
 0hello-service/src/main/resources/application.yml,a/0/a0b268561abd653ab4f92784d7634c45b56b256a
 b
 2hello-service-2/src/main/resources/application.yml,1/d/1ddf5c258a27c7cacabbf17ffa2040e7ed97ce3d
+i
+9spring-cloud-eureka-feign-client-integration-test/pom.xml,d/3/d3483294d782a8f66ab8165df08cf10be2bf0bb8
