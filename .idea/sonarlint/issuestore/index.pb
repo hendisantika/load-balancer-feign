@@ -62,3 +62,5 @@ i
 .gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
 X
 (spring-cloud-eureka-feign-client/pom.xml,c/0/c0e1db44b390e2e1fffb6b711d22e5dc32f23ee8
+¼
+‹spring-cloud-eureka-feign-client/src/main/java/id/my/hendisantika/springcloudeurekafeignclient/SpringCloudEurekaFeignClientApplication.java,5/9/5929e895dd1a3f06b2dd0082a31639d0eb6e6eb4
