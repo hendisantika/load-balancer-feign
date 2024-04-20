@@ -1,8 +1,10 @@
 package id.my.hendisantika.springcloudeurekafeignclientintegrationtest;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
 import id.my.hendisantika.springcloudeurekafeignclientintegrationtest.client.BooksClient;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,6 +20,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
 
+import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.moreThan;
 import static id.my.hendisantika.springcloudeurekafeignclientintegrationtest.BookMocks.setupMockBooksResponse;
 
 /**
@@ -65,4 +69,15 @@ class LoadBalancerBooksClientIntegrationTest {
         return new DefaultServiceInstance(serviceId, serviceId, host, port, secure);
     }
 
+    @Test
+    void whenGetBooks_thenRequestsAreLoadBalanced() {
+        for (int k = 0; k < 10; k++) {
+            booksClient.getBooks();
+        }
+
+        mockBooksService.verify(
+                moreThan(0), getRequestedFor(WireMock.urlEqualTo("/books")));
+        secondMockBooksService.verify(
+                moreThan(0), getRequestedFor(WireMock.urlEqualTo("/books")));
+    }
 }
