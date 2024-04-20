@@ -3,6 +3,7 @@ package id.my.hendisantika.springcloudeurekafeignclientintegrationtest;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import id.my.hendisantika.springcloudeurekafeignclientintegrationtest.client.BooksClient;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.io.IOException;
 
 import static id.my.hendisantika.springcloudeurekafeignclientintegrationtest.BookMocks.setupMockBooksResponse;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 /**
  * Created by IntelliJ IDEA.
@@ -47,5 +49,10 @@ class BooksClientIntegrationTest {
     void setUp() throws IOException {
         setupMockBooksResponse(mockBooksService);
         setupMockBooksResponse(mockBooksService2);
+    }
+
+    @Test
+    public void whenGetBooks_thenBooksShouldBeReturned() {
+        assertFalse(booksClient.getBooks().isEmpty());
     }
 }
