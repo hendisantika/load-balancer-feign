@@ -2,6 +2,7 @@ package id.my.hendisantika.springcloudeurekafeignclientintegrationtest;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import id.my.hendisantika.springcloudeurekafeignclientintegrationtest.client.BooksClient;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -9,7 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.Response;
 import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
+import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
+import org.springframework.cloud.loadbalancer.support.ServiceInstanceListSuppliers;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -17,6 +20,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.BDDAssertions.then;
@@ -69,5 +73,14 @@ class LoadBalancerIntegrationTest {
                 }
             }).verifyComplete();
         }
+    }
+
+    @Test
+    void staticConfigurationWorks() {
+        String serviceId = "test-book-service";
+        RoundRobinLoadBalancer loadBalancer = new RoundRobinLoadBalancer(ServiceInstanceListSuppliers
+                .toProvider(serviceId, instance(serviceId, "bookservice1", 1030, false), instance(serviceId, "bookservice2", 1031, false)),
+                serviceId, -1);
+        assertLoadBalancer(loadBalancer, Arrays.asList("bookservice1", "bookservice2"));
     }
 }
