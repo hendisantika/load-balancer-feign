@@ -22,4 +22,9 @@ public class WireMockConfig {
     public WireMockServer mockBooksService() {
         return new WireMockServer(1030);
     }
+
+    @Bean(initMethod = "start", destroyMethod = "stop")
+    public WireMockServer mockBooksService2() {
+        return new WireMockServer(1031);
+    }
 }
