@@ -10,6 +10,7 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/spring-cloud-eureka-feign-client-integration-test/pom.xml" />
+        <option value="$PROJECT_DIR$/spring-cloud-eureka-feign-client/pom.xml" />
       </list>
     </option>
   </component>
