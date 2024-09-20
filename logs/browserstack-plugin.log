@@ -99,3 +99,11 @@
 06:10:41.180 [ApplicationImpl pooled thread 15] INFO  c.b.l.BrowserStackRunExtension - junit
 06:10:41.180 [ApplicationImpl pooled thread 15] INFO  com.browserstack.utils.Helpers - null
 06:10:41.182 [ApplicationImpl pooled thread 15] INFO  c.b.l.BrowserStackRunExtension - Agent path: null
+07:21:55.604 [AWT-EventQueue-0] INFO  c.b.l.BrowserStackRunExtension - gradle
+07:21:55.605 [AWT-EventQueue-0] INFO  com.browserstack.utils.Helpers - null
+07:22:37.108 [AWT-EventQueue-0] INFO  c.b.l.BrowserStackRunExtension - gradle
+07:22:37.109 [AWT-EventQueue-0] INFO  com.browserstack.utils.Helpers - null
+07:23:29.160 [AWT-EventQueue-0] INFO  c.b.l.BrowserStackRunExtension - gradle
+07:23:29.160 [AWT-EventQueue-0] INFO  com.browserstack.utils.Helpers - null
+07:23:36.815 [AWT-EventQueue-0] INFO  c.b.l.BrowserStackRunExtension - gradle
+07:23:36.816 [AWT-EventQueue-0] INFO  com.browserstack.utils.Helpers - null
