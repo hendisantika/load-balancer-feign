@@ -1,0 +1,41 @@
+version: 2
+updates:
+  - package-ecosystem: gradle
+    directory: "/eureka-server"
+    schedule:
+      interval: daily
+      time: ’05:00'
+      timezone: Asia/Jakarta
+    open-pull-requests-limit: 10
+  - package-ecosystem: gradle
+    directory: "/hello-service"
+    schedule:
+      interval: daily
+      time: ’05:00'
+      timezone: Asia/Jakarta
+    open-pull-requests-limit: 10
+  - package-ecosystem: gradle
+    directory: "/hello-service2"
+    schedule:
+      interval: daily
+      time: ’05:00'
+      timezone: Asia/Jakarta
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/spring-cloud-eureka-feign-client"
+    schedule:
+      interval: daily
+      time: ’05:00'
+      timezone: Asia/Jakarta
+    open-pull-requests-limit: 10
+  - package-ecosystem: maven
+    directory: "/spring-cloud-eureka-feign-client-integration-test"
+    schedule:
+      interval: daily
+      time: ’05:00'
+      timezone: Asia/Jakarta
+    open-pull-requests-limit: 10
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
