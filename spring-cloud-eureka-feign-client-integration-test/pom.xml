@@ -15,7 +15,7 @@
     <description>spring-cloud-eureka-feign-client-integration-test</description>
     <properties>
         <java.version>21</java.version>
-        <wiremock.version>3.12.1</wiremock.version>
+        <wiremock.version>3.13.0</wiremock.version>
         <junit-jupiter.version>5.12.2</junit-jupiter.version>
         <testcontainers.version>1.21.0</testcontainers.version>
         <spring-cloud-dependencies.version>2024.0.1</spring-cloud-dependencies.version>
