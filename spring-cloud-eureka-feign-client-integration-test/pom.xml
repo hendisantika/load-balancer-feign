@@ -17,7 +17,7 @@
         <java.version>21</java.version>
         <wiremock.version>3.13.0</wiremock.version>
         <junit-jupiter.version>5.12.2</junit-jupiter.version>
-        <testcontainers.version>1.21.0</testcontainers.version>
+        <testcontainers.version>1.21.1</testcontainers.version>
         <spring-cloud-dependencies.version>2025.0.0</spring-cloud-dependencies.version>
     </properties>
     <dependencies>
