@@ -1,41 +1,121 @@
+# Dependabot configuration
+# Docs: https://docs.github.com/en/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+#
+# - One entry per ecosystem using `directories` (multi-directory) instead of one entry per service
+# - Related libraries are grouped so a Spring Boot / Spring Cloud bump arrives as a single PR
+# - `cooldown` waits a few days after a release before proposing it (supply-chain safety + fewer broken releases)
+
 version: 2
+
 updates:
+  # ---------------------------------------------------------------- Gradle services
   - package-ecosystem: gradle
-    directory: "/eureka-server"
+    directories:
+      - "/eureka-server"
+      - "/hello-service"
+      - "/hello-service-2"
     schedule:
       interval: daily
-      time: '05:00'
+      time: "05:00"
       timezone: Asia/Jakarta
     open-pull-requests-limit: 10
-  - package-ecosystem: gradle
-    directory: "/hello-service"
-    schedule:
-      interval: daily
-      time: '05:00'
-      timezone: Asia/Jakarta
-    open-pull-requests-limit: 10
-  - package-ecosystem: gradle
-    directory: "/hello-service2"
-    schedule:
-      interval: daily
-      time: '05:00'
-      timezone: Asia/Jakarta
-    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 3
+      semver-major-days: 7
+    assignees:
+      - hendisantika
+    labels:
+      - dependencies
+      - java
+      - gradle
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    groups:
+      spring-boot:
+        patterns:
+          - "org.springframework.boot*"
+          - "io.spring.dependency-management*"
+      spring-cloud:
+        patterns:
+          - "org.springframework.cloud*"
+      gradle-wrapper:
+        patterns:
+          - "gradle-wrapper"
+      others:
+        update-types:
+          - minor
+          - patch
+        exclude-patterns:
+          - "org.springframework.boot*"
+          - "io.spring.dependency-management*"
+          - "org.springframework.cloud*"
+
+  # ---------------------------------------------------------------- Maven services
   - package-ecosystem: maven
-    directory: "/spring-cloud-eureka-feign-client"
+    directories:
+      - "/spring-cloud-eureka-feign-client"
+      - "/spring-cloud-eureka-feign-client-integration-test"
     schedule:
       interval: daily
-      time: '05:00'
+      time: "05:00"
       timezone: Asia/Jakarta
     open-pull-requests-limit: 10
-  - package-ecosystem: maven
-    directory: "/spring-cloud-eureka-feign-client-integration-test"
-    schedule:
-      interval: daily
-      time: '05:00'
-      timezone: Asia/Jakarta
-    open-pull-requests-limit: 10
-  - package-ecosystem: "github-actions"
+    cooldown:
+      default-days: 3
+      semver-major-days: 7
+    assignees:
+      - hendisantika
+    labels:
+      - dependencies
+      - java
+      - maven
+    commit-message:
+      prefix: "chore(deps)"
+      include: scope
+    groups:
+      spring-boot:
+        patterns:
+          - "org.springframework.boot*"
+      spring-cloud:
+        patterns:
+          - "org.springframework.cloud*"
+      testing:
+        patterns:
+          - "org.junit*"
+          - "org.wiremock*"
+          - "org.testcontainers*"
+          - "org.awaitility*"
+          - "io.projectreactor:reactor-test"
+      maven-plugins:
+        patterns:
+          - "org.apache.maven.plugins*"
+          - "org.apache.maven.wrapper*"
+      others:
+        update-types:
+          - minor
+          - patch
+        exclude-patterns:
+          - "org.springframework.boot*"
+          - "org.springframework.cloud*"
+
+  # ---------------------------------------------------------------- GitHub Actions
+  - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: weekly
+      day: monday
+      time: "05:00"
+      timezone: Asia/Jakarta
+    open-pull-requests-limit: 5
+    assignees:
+      - hendisantika
+    labels:
+      - dependencies
+      - github_actions
+    commit-message:
+      prefix: "ci(deps)"
+    groups:
+      github-actions:
+        patterns:
+          - "*"
