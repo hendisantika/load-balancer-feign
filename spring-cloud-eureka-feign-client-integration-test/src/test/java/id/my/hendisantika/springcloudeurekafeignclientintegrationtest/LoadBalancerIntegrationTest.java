@@ -5,10 +5,9 @@ import id.my.hendisantika.springcloudeurekafeignclientintegrationtest.client.Boo
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.DefaultServiceInstance;
 import org.springframework.cloud.client.ServiceInstance;
@@ -20,10 +19,10 @@ import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.ServiceInstanceListSupplier;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.cloud.loadbalancer.support.ServiceInstanceListSuppliers;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Mono;
@@ -45,11 +44,11 @@ import static org.assertj.core.api.BDDAssertions.then;
  * To change this template use File | Settings | File Templates.
  */
 @SpringBootTest
-@EnableFeignClients
 @EnableConfigurationProperties
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
-@ContextConfiguration(classes = {TestConfig.class})
+@ContextConfiguration(classes = {TestConfig.class, LoadBalancerIntegrationTest.Config.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class LoadBalancerIntegrationTest {
 
     @Autowired
@@ -97,8 +96,7 @@ class LoadBalancerIntegrationTest {
         return new DefaultServiceInstance(serviceId, serviceId, host, port, secure);
     }
 
-    @EnableAutoConfiguration
-    @SpringBootConfiguration(proxyBeanMethods = false)
+    @TestConfiguration(proxyBeanMethods = false)
     @LoadBalancerClients({@LoadBalancerClient(name = "books-service", configuration = MyBooksServiceConfig.class)})
     @EnableCaching
     protected static class Config {

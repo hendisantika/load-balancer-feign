@@ -6,14 +6,18 @@ plugins {
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '21'
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
 
 repositories {
 	mavenCentral()
 }
 
 ext {
-	set('springCloudVersion', "2023.0.1")
+	set('springCloudVersion', "2025.1.4")
 }
 
 dependencies {
@@ -27,6 +31,6 @@ dependencyManagement {
 	}
 }
 
-test {
+tasks.named('test') {
 	useJUnitPlatform()
 }

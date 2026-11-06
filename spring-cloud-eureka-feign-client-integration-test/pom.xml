@@ -14,11 +14,11 @@
     <name>spring-cloud-eureka-feign-client-integration-test</name>
     <description>spring-cloud-eureka-feign-client-integration-test</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <wiremock.version>3.13.2</wiremock.version>
         <junit-jupiter.version>6.1.3</junit-jupiter.version>
         <testcontainers.version>2.0.5</testcontainers.version>
-        <spring-cloud-dependencies.version>2025.0.3</spring-cloud-dependencies.version>
+        <spring-cloud-dependencies.version>2025.1.4</spring-cloud-dependencies.version>
     </properties>
     <dependencies>
         <dependency>
@@ -47,20 +47,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <version>4.1.2</version>
-        </dependency>
-        <dependency>
             <groupId>org.wiremock</groupId>
             <artifactId>wiremock-standalone</artifactId>
             <version>${wiremock.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
         </dependency>
         <dependency>
             <groupId>org.testcontainers</groupId>
@@ -109,7 +99,7 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-parent</artifactId>
+                <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -119,6 +109,32 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- *LiveTest needs a running Eureka server on localhost:8761, run it explicitly -->
+                    <excludes>
+                        <exclude>**/*LiveTest.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

@@ -1,19 +1,23 @@
 plugins {
-	id 'org.springframework.boot' version '3.3.3'
-	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.springframework.boot' version '4.1.2'
+	id 'io.spring.dependency-management' version '1.1.7'
 	id 'java'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '21'
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+}
 
 repositories {
 	mavenCentral()
 }
 
 ext {
-	set('springCloudVersion', "2023.0.1")
+	set('springCloudVersion', "2025.1.4")
 }
 
 dependencies {
@@ -28,6 +32,6 @@ dependencyManagement {
 	}
 }
 
-test {
+tasks.named('test') {
 	useJUnitPlatform()
 }

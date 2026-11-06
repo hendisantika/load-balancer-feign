@@ -18,8 +18,8 @@ import org.springframework.cloud.loadbalancer.core.ReactorLoadBalancer;
 import org.springframework.cloud.loadbalancer.core.RoundRobinLoadBalancer;
 import org.springframework.cloud.loadbalancer.support.LoadBalancerClientFactory;
 import org.springframework.cloud.loadbalancer.support.ServiceInstanceListSuppliers;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.core.publisher.Mono;
@@ -49,9 +49,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 @ActiveProfiles("test")
 @EnableConfigurationProperties
-@EnableFeignClients
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestConfig.class})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class LoadBalancerBooksClientIntegrationTest {
 
     @Autowired
@@ -98,7 +98,7 @@ class LoadBalancerBooksClientIntegrationTest {
         assertTrue(booksClient.getBooks()
                 .containsAll(asList(
                         new Book("Dune", "Frank Herbert"),
-                        new Book("Foundation", "Isaac Asimov"))));
+                        new Book("Harry Potter", "JK. Rowling"))));
     }
 
     @Test
